@@ -9,10 +9,12 @@
 
 ## About LARAVEL NEWS Project
 I am making a news project for my youtube viewers with Laravel. In the project, I will write the back-end apis with laravel and use bootstrap on the frontend side. Please click for the video series. 
+
 <a href="https://www.youtube.com/playlist?list=PLvDYObN1J9DIwIOToJCVztg1abOD5F8cw"><img src="https://i3.ytimg.com/vi/8heYwjDgOxA/maxresdefault.jpg" width="120" alt="yazılımcı adam youtube"></a>
 I would be glad if you subscribe 😊
 
 ## LARAVEL NEWS Projesi Hakkında
 Laravel ile youtube izleyicilerim için haber projesi yapıyorum. Projede back-end apilerini laravel ile yazarak frontend tarafında bootstrap kullanacağım. Video serisi için lütfen tıklayın. 
+
 <a href="https://www.youtube.com/playlist?list=PLvDYObN1J9DIwIOToJCVztg1abOD5F8cw"><img src="https://i3.ytimg.com/vi/8heYwjDgOxA/maxresdefault.jpg" width="120" alt="yazılımcı adam youtube"></a>
 Abone olursanız sevinirim 😊

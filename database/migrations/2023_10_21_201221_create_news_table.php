@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->boolean('is_active')->default(true);
             //$table->timestamp('published_at')->nullable(); @todo: ilerisi için güzel bir özellik
+            $table->softDeletes();
             $table->timestamps();
         });
     }

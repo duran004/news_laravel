@@ -12,25 +12,10 @@ class TestController extends Controller
 {
     public function test_methodu()
     {
-        // $user = $this->create_user();
-        // $category_modeli = Category::create([
-        //     'name' => 'Test Kategori',
-        //     'slug' => 'test-kategori' . rand(1, 99900),
-        //     'image' => 'test-kategori.jpg'
-        // ]);
-        // News::create([
-        //     'title' => 'Test Haber Başlığı',
-        //     'slug' => 'test-haber-basligi' . rand(1, 99900),
-        //     'image' => 'test-haber.jpg',
-        //     'content' => 'Test Haber İçeriği',
-        //     'user_id' => $user->id,
-        //     'category_id' => $category_modeli->id
-        // ]);
-
-        $haber = News::with('category', 'user')
-            ->withTrashed()
-            ->get();
-        dd($haber);
+       $user = User::find(3);
+       $news=$user->news()->first();
+       $images=$news->images()->first();
+       dd($images->image->name);
     }
 
     public function create_user(): User

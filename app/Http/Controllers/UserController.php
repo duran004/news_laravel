@@ -26,6 +26,21 @@ class UserController extends Controller
         ]);
     }
 
+    public function get_user(){
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Kullanıcı bulunamadı.'
+            ]);
+        }
+        return response()->json([
+            'status' => true,
+            'message' => 'Kullanıcı bilgileri başarıyla getirildi.',
+            'data' => $user
+        ]);
+    }
+
     public function login(UserLoginRequest $request)
     {
         $user = Auth::attempt(['email' => $request->email, 'password' => $request->password]);
@@ -42,15 +57,8 @@ class UserController extends Controller
         ]);
     }
 
-    public function logout(UserLoginRequest $request)
+    public function logout()
     {
-        $user = Auth::attempt(['email' => $request->email, 'password' => $request->password]);
-        if (!$user) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Kullanıcı bulunamadı.'
-            ]);
-        }
         Auth::logout();
         return response()->json([
             'status' => true,

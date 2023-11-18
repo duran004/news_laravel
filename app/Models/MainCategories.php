@@ -5,15 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class MainCategories extends Model
 {
     use HasFactory;
-    
-    protected $table = 'categories';
-
+    protected $table = 'main_categories';
     protected $fillable = [
         'name',
-        'main_categories_id',
         'image_id',
         'slug'
     ];

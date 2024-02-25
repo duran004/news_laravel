@@ -20,7 +20,6 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             NewsSeeder::class,
             
-            NewsImagesSeeder::class,
         ]);
     }
 }

@@ -13,12 +13,13 @@ class News extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'news';
-    
+
     protected $fillable = [
         'title',
+        'description',
         'slug',
         'content',
-        'image',
+        'image_id',
         'category_id',
         'user_id',
         'is_active'

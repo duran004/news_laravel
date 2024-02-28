@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class MainCategories extends Model
+class MainCategory extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     protected $table = 'main_categories';
     protected $fillable = [
         'name',

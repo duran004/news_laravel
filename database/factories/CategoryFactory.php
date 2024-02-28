@@ -18,9 +18,11 @@ class CategoryFactory extends Factory
     {
         return [
             'name' => $this->faker->word(),
-            'main_categories_id' => $this->faker->numberBetween(1, 10),
+            'main_category_id' => $this->faker->numberBetween(1, 10),
             'slug' => $this->faker->slug(),
             'image_id' => $this->faker->numberBetween(1, 10),
+            'description' => $this->faker->text(),
+            'title' => $this->faker->sentence()
         ];
     }
 }

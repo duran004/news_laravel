@@ -18,6 +18,7 @@ class NewsFactory extends Factory
     {
         return [
             'title' => $this->faker->sentence(3),
+            'description' => $this->faker->paragraph(3),
             'slug' => $this->faker->slug(),
             'content' => $this->faker->paragraph(10),
             'image_id' => $this->faker->numberBetween(1, 10),

@@ -44,4 +44,5 @@ class CreateUserRequest extends FormRequest
             'password.max' => 'Şifre alanı en fazla 255 karakterden oluşmalıdır.'
         ];
     }
+
 }

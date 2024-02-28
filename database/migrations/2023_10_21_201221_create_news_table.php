@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('news', function (Blueprint $table) {
             $table->id();
             $table->string('title', 160);
+            $table->text('description')->nullable();
             $table->string('slug', 255)->unique();
             $table->text('content');
             $table->foreignId('image_id')->nullable()->constrained('images')->onDelete('cascade');
@@ -21,8 +22,9 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->boolean('is_active')->default(true);
             //$table->timestamp('published_at')->nullable(); @todo: ilerisi için güzel bir özellik
-            $table->softDeletes();
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -21,7 +21,7 @@ use App\Http\Middleware\VerifyCsrfToken;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 Route::get('test', [TestController::class, 'test_methodu']);
 
 Route::group([

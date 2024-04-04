@@ -10,26 +10,18 @@ use App\Http\Requests\CreateCategoryRequest;
 use App\Http\Requests\DeleteCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 
+use App\Repositories\CategoryRepository;
+
 class CategoryController extends Controller
 {
+    protected $categoryRepository;
+    public function __construct(CategoryRepository $categoryRepository)
+    {
+        $this->categoryRepository = $categoryRepository;
+    }
     public function get_categories(int $id = 0)
     {
-        if ($id != 0) {
-            $category = Category::find($id);
-        } else {
-            $category = Category::all();
-        }
-        if (!$category) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Kategori bulunamadı.'
-            ], 400);
-        }
-        return response()->json([
-            'status' => true,
-            'message' => 'Kategoriler başarıyla getirildi.',
-            'data' => $category
-        ]);
+        return $this->categoryRepository->findOrall($id);
     }
 
     public function create_category(CreateCategoryRequest $request)

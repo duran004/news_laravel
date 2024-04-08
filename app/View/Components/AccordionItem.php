@@ -11,7 +11,7 @@ class AccordionItem extends Component
     /**
      * Create a new component instance.
      */
-    private int $uniqueId = 0;
+    public int $uniqueId = 0;
     public function __construct(
         public string $title = ""
     ) {

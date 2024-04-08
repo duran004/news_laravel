@@ -23,6 +23,6 @@ class AccordionItem extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.accordion-item', ['uniqueId' => $this->uniqueId, 'title' => $this->title]);
+        return view('components.accordionitem', ['uniqueId' => $this->uniqueId, 'title' => $this->title]);
     }
 }

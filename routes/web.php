@@ -1,13 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\VerifyCsrfToken;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MainCategoryController;
-use App\Http\Middleware\VerifyCsrfToken;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -73,5 +74,9 @@ Route::group([
             Route::post('find-by-name', [ImageController::class, 'find_by_name']);
             Route::post('delete', [ImageController::class, 'delete']);
             Route::post('update', [ImageController::class, 'update_image']);
+        });
+    Route::prefix('mail')
+        ->group(function () {
+            Route::post('send', [MailController::class, 'send_mail']);
         });
 });

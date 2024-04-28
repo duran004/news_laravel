@@ -3,6 +3,8 @@ echo function_exists('opcache_get_status') && opcache_get_status() && opcache_ge
 ?>
 @extends('layouts.app')
 @section('content')
+    @livewire('Categories')
+    @livewire('Counter', ['count' => 10])
     {{-- <x-alert msg="The biggest battle is the war against ignorance. - Mustafa Kemal Atatürk" type="info" />
     <x-alert msg="The biggest battle is the war against ignorance. - Mustafa Kemal Atatürk" type="primary" />
     <x-alert msg="The biggest battle is the war against ignorance. - Mustafa Kemal Atatürk" type="secondary" />

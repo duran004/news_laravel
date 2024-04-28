@@ -14,6 +14,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/telescope": "^5.0",
         "laravel/tinker": "^2.8",
+        "livewire/livewire": "^3.4",
         "symfony/http-client": "^7.0",
         "symfony/mailgun-mailer": "^7.0"
     },

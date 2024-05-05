@@ -85,3 +85,11 @@ Route::group([
             Route::post('send', [MailController::class, 'send_mail']);
         });
 });
+
+Route::group([
+    'prefix' => 'admin',
+], function () {
+    Route::get('/', function () {
+        return view('admin.index');
+    })->name('admin.index');
+});

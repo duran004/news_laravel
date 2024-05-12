@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
             MainCategorySeeder::class,
             CategorySeeder::class,
             NewsSeeder::class,
-            
+            RolePermissionSeeder::class,
+
         ]);
     }
 }

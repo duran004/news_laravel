@@ -32,6 +32,7 @@ Route::get('test', [TestController::class, 'test_methodu']);
 
 Route::group([
     'prefix' => 'api',
+
 ], function () {
     Route::prefix('user')
         ->group(function () {
@@ -88,8 +89,22 @@ Route::group([
 
 Route::group([
     'prefix' => 'admin',
+    'middleware' => ['auth', 'role:Editor'],
 ], function () {
     Route::get('/', function () {
         return view('admin.index');
     })->name('admin.index');
+});
+
+Route::group([
+    'prefix' => 'admin',
+], function () {
+    Route::get('/login', function () {
+        return view('admin.login');
+    })->name('login');
+
+    Route::get('/forgot-password', function () {
+        return view('admin.forgot-password');
+    })->name('admin.forgot-password');
+    Route::post('/forgot-password-post', [UserController::class, 'forgot_password'])->name('admin.forgot-password-post');
 });

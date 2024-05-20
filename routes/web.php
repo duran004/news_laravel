@@ -108,3 +108,6 @@ Route::group([
     })->name('admin.forgot-password');
     Route::post('/forgot-password-post', [UserController::class, 'forgot_password'])->name('admin.forgot-password-post');
 });
+
+
+Route::post('test', [TestController::class, 'test_methodu']);

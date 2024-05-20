@@ -14,9 +14,22 @@
     <link rel="stylesheet" href="/storage/adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
 
     <link rel="stylesheet" href="/storage/adminlte/dist/css/adminlte.min.css?v=3.2.0">
+
+
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <!-- sweetalert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- confirm -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.js"></script>
+
 </head>
 
 <body class="hold-transition login-page">
+
+
     <div class="login-box">
 
         <div class="card card-outline card-primary">
@@ -25,9 +38,10 @@
             </div>
             <div class="card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
-                <form action="/storage/adminlte/index3.html" method="post">
+                <form action="/test" method="post" class="formajax">
+                    @csrf
                     <div class="input-group mb-3">
-                        <input type="email" class="form-control" placeholder="Email">
+                        <input type="email" name="email" class="form-control" placeholder="Email">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -35,7 +49,7 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" class="form-control" placeholder="Password">
+                        <input type="password" name="password" class="form-control" placeholder="Password">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -45,7 +59,7 @@
                     <div class="row">
                         <div class="col-8">
                             <div class="icheck-primary">
-                                <input type="checkbox" id="remember">
+                                <input type="checkbox" name="checkbox1" id="remember">
                                 <label for="remember">
                                     Remember Me
                                 </label>
@@ -70,7 +84,11 @@
     </div>
 
 
-    <script src="/storage/adminlte/plugins/jquery/jquery.min.js"></script>
+
+    <script src="/storage/js/formajax_new.js"></script>
+
+
+    {{-- <script src="/storage/adminlte/plugins/jquery/jquery.min.js"></script> --}}
 
     <script src="/storage/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 

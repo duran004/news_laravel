@@ -12,10 +12,11 @@ class TestController extends Controller
 {
     public function test_methodu()
     {
-       $user = User::find(3);
-       $news=$user->news()->first();
-       $images=$news->images()->first();
-       dd($images->image->name);
+        $user = User::find(1);
+        return view('testview');
+        $news = $user->news()->first();
+        $images = $news->images()->first();
+        dd($images->image->name);
     }
 
     public function create_user(): User

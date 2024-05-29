@@ -1,200 +1,213 @@
 class FormAjax {
-    debug = true;
-    dependencies = ['jquery', 'jquery-confirm'];
-    elements = 'input, select, textarea, checkbox, radio, button, submit, reset, hidden, password, text, url, email, tel, date, datetime-local, month, week, time, number, range, color';
-    constructor(form_element) {
-        this.form_element = form_element;
+    constructor(formElement) {
+        this.debug = true;
+        this.dependencies = ['jquery', 'jquery-confirm'];
+        this.elementsSelector = 'input, select, textarea, checkbox, radio, button, submit, reset, hidden, password, text, url, email, tel, date, datetime-local, month, week, time, number, range, color';
+        this.formElement = formElement;
         this.settings = new FormSettings();
-        if (this.load_dependencies()) {
+
+        if (this.loadDependencies()) {
             this.init();
         }
     }
-    load_dependencies() {
-        let is_loaded = true;
-        try {
-            this.dependencies.forEach(dependency => {
-                if (dependency == 'jquery') {
-                    if (typeof jQuery == 'undefined') {
-                        this.log('jQuery not found', 'error');
-                        is_loaded = false;
-                    }
-                }
-                if (dependency == 'jquery-confirm') {
-                    if (typeof $.confirm == 'undefined') {
-                        this.log('jquery-confirm not found', 'error');
-                        is_loaded = false;
-                    }
-                }
-            });
-        } catch (e) {
-            this.log('Error: ' + e, 'error');
-            is_loaded = false;
+
+    loadDependencies() {
+        const missingDependencies = this.dependencies.filter(dep => {
+            if (dep === 'jquery' && typeof jQuery === 'undefined') return true;
+            if (dep === 'jquery-confirm' && typeof $.confirm === 'undefined') return true;
+            return false;
+        });
+
+        if (missingDependencies.length > 0) {
+            missingDependencies.forEach(dep => this.log(`${dep} not found`, 'error'));
+            return false;
         }
-
-        return is_loaded;
+        return true;
     }
+
     init() {
-        let _this = this;
-        $(document).on('submit', this.form_element, function (e) {
+        $(document).on('submit', this.formElement, (e) => {
             e.preventDefault();
-            this.form = this;
-            _this.log('The form has been submitted: ' + _this.form_element);
-            _this.handleSubmit(this);
+            this.log(`The form has been submitted: ${this.formElement}`);
+            this.handleSubmit(e.target);
         });
-        this.log('form_element:' + this.form_element);
-    }
-    handleSubmit(form) {
-        let _this = this;
-        new Promise((resolve, reject) => {
-            if (_this.settings.confirm) {
-                $.confirm({
-                    title: _this.settings.confirm_title,
-                    content: _this.settings.confirm_msg,
-                    buttons: {
-                        Evet: {
-                            btnClass: 'btn-blue jquery_confirm_btn_blue',
-                            action: function () {
-                                _this.submit(form);
-                            }
-                        },
-                        Hayir: {
-                            btnClass: 'btn-red',
-                            action: function () {
-                                $.alert('İşlem iptal edildi!');
-                            }
-                        }
-                    }
-                });
-            } else {
-                _this.submit(form);
-            }
-        });
+        this.log(`form_element: ${this.formElement}`);
     }
 
-    formSettings(FormSettings) {
-        this.settings = FormSettings;
+    handleSubmit(form) {
+        if (this.settings.confirm) {
+            $.confirm({
+                title: this.settings.confirmTitle,
+                content: this.settings.confirmMsg,
+                buttons: {
+                    Evet: {
+                        btnClass: 'btn-blue jquery_confirm_btn_blue',
+                        action: () => this.submit(form),
+                    },
+                    Hayir: {
+                        btnClass: 'btn-red',
+                        action: () => $.alert('İşlem iptal edildi!'),
+                    },
+                },
+            });
+        } else {
+            this.submit(form);
+        }
     }
-    get_elements(form) {
-        //[...document.forms[0].elements].forEach(i => { console.log(i) }) 
+
+    setFormSettings(settings) {
+        this.settings = settings;
+    }
+
+    getElements(form) {
         return [...form.elements];
     }
-    create_url(form) {
-        let allElements = $(form).find(this.elements);
-        let get_url = allElements.toArray().reduce((url, element) => {
-            let $element = $(element);
-            let name = $element.attr('name');
-            if (name !== undefined && name !== false) {
-                let value = $element.is(':checkbox') ? $element.prop('checked') : $element.val();
-                this.log('name:' + name + ' value:' + value);
-                url += encodeURIComponent(name) + '=' + encodeURIComponent(value) + '&';
+
+    createUrl(form) {
+        const allElements = $(form).find(this.elementsSelector);
+        return allElements.toArray().reduce((url, element) => {
+            const $element = $(element);
+            const name = $element.attr('name');
+            if (name) {
+                const value = $element.is(':checkbox') ? $element.prop('checked') : $element.val();
+                this.log(`name: ${name} value: ${value}`);
+                url += `${encodeURIComponent(name)}=${encodeURIComponent(value)}&`;
             }
-
             return url;
-        }, '');
-
-        return get_url.slice(0, -1); // Son '&' karakterini kaldır
+        }, '').slice(0, -1); // Remove the last '&' character
     }
 
     submit(form) {
-        let _this = this;
-        let form_data = new FormData(form);
-        let form_url = $(form).attr('action');
-        let form_method = $(form).attr('method');
-        let elements = this.get_elements(form);
-        if (form_method.toLowerCase() == 'get') {
-            form_data = this.create_url($(form));
-        }
-        this.log('form_data:' + form_data, 'warning');
+        const formData = new FormData(form);
+        const formUrl = $(form).attr('action');
+        const formMethod = $(form).attr('method').toLowerCase();
+        const data = formMethod === 'get' ? this.createUrl(form) : formData;
+
+        this.log(`form_data: ${data}`, 'warning');
         $.ajax({
-            url: form_url,
-            method: form_method,
-            data: form_data,
-            processData: false,
-            contentType: false,
-            success: function (response) {
-                if (_this.settings.open_popup) {
-                    $.alert({
-                        columnClass: 'col-md-12 col-md-offset-3',
-                        title: _this.settings.title,
-                        content: response,
-                        buttons: {
-                            Tamam: {
-                                btnClass: 'btn-blue jquery_confirm_btn_blue',
-                                action: function () {
-                                    if (_this.settings.refresh) {
-                                        setTimeout(function () {
-                                            location.reload();
-                                        }, _this.settings.refresh_time);
-                                    }
-                                }
-                            }
-                        }
-                    });
-                } else {
-                    if (_this.settings.refresh) {
-                        setTimeout(function () {
-                            location.reload();
-                        }, _this.settings.refresh_time);
+            url: formUrl,
+            method: formMethod,
+            data: data,
+            processData: formMethod !== 'post',
+            contentType: formMethod === 'post' ? false : 'application/x-www-form-urlencoded; charset=UTF-8',
+            success: (response, status, xhr) => {
+                if (xhr.status === 200) {
+                    if (response.status) {
+                        this.handleSuccess(response);
+                    } else {
+                        this.handleError(response, 200);
                     }
+                } else {
+                    this.handleError(xhr);
                 }
             },
-            error: function (response) {
-                _this.log('response:' + response, 'error');
-            }
-
-        })
-
+            error: (xhr) => this.handleError(xhr),
+        });
     }
 
-
-    log(str, type = 'info') {
-        if (!this.debug) { return; }
-        let backgroundColor = '#a30000';
-        let color = 'white';
-        if (type == 'info') {
-            backgroundColor = '#007bff';
-            color = 'white';
-        } else if (type == 'error') {
-            backgroundColor = '#dc3545';
-            color = 'white';
-        } else if (type == 'warning') {
-            backgroundColor = '#ffc107';
-            color = 'black';
-        } else if (type == 'success') {
-            backgroundColor = '#28a745';
-            color = 'white';
+    handleSuccess(response) {
+        if (this.settings.openPopup) {
+            $.alert({
+                columnClass: 'col-md-12 col-md-offset-3',
+                title: this.settings.title,
+                content: response.message,
+                buttons: {
+                    Tamam: {
+                        btnClass: 'btn-blue jquery_confirm_btn_blue',
+                        action: () => {
+                            if (this.settings.refresh) {
+                                setTimeout(() => location.reload(), this.settings.refreshTime);
+                            }
+                        },
+                    },
+                },
+            });
         }
-        console.log('%c' + str, 'background: ' + backgroundColor + '; color: ' + color + '; padding: 5px; border-radius: 5px;');
+        if (this.settings.refresh) {
+            setTimeout(() => location.reload(), this.settings.refreshTime);
+        }
+    }
+
+    handleError(xhrOrMsg, type = 'error') {
+        console.log(xhrOrMsg);
+        let errorMessage = '';
+        if (type === 200) {
+            errorMessage = xhrOrMsg.message;
+        } else {
+            errorMessage = xhrOrMsg.responseJSON ? xhrOrMsg.responseJSON.message : xhrOrMsg.statusText;
+        }
+
+
+        if (this.settings.openPopup) {
+            $.alert({
+                columnClass: 'col-md-12 col-md-offset-3',
+                title: 'Error',
+                content: errorMessage,
+                buttons: {
+                    Tamam: {
+                        btnClass: 'btn-red',
+                    },
+                },
+            });
+        }
+    }
+
+    log(message, type = 'info') {
+        if (!this.debug) return;
+
+        const logTypes = {
+            info: { background: '#007bff', color: 'white' },
+            error: { background: '#dc3545', color: 'white' },
+            warning: { background: '#ffc107', color: 'black' },
+            success: { background: '#28a745', color: 'white' },
+        };
+
+        const { background, color } = logTypes[type] || logTypes.info;
+        console.log(`%c${message}`, `background: ${background}; color: ${color}; padding: 5px; border-radius: 5px;`);
     }
 }
 
 class FormSettings {
-    constructor(
-        formAjax = null,
+    constructor({
         title = 'İşlem Sonucu',
-        open_popup = false,
+        openPopup = false,
         confirm = false,
-        confirm_title = 'Uyarı!',
-        confirm_msg = 'Bu işlemi gerçekleştirmek istediğinize emin misiniz?',
+        confirmTitle = 'Uyarı!',
+        confirmMsg = 'Bu işlemi gerçekleştirmek istediğinize emin misiniz?',
         refresh = false,
-        refresh_time = 1000
-    ) {
-        this.formAjax = formAjax;
-        this.title = title
-        this.open_popup = open_popup;
-        this.refresh = refresh;
-        this.refresh_time = refresh_time;
-        this.confirm = confirm;
-        this.confirm_title = confirm_title;
-        this.confirm_msg = confirm_msg;
-    }
-    set_title(title) {
+        refreshTime = 1000,
+    } = {}) {
         this.title = title;
+        this.openPopup = openPopup;
+        this.confirm = confirm;
+        this.confirmTitle = confirmTitle;
+        this.confirmMsg = confirmMsg;
+        this.refresh = refresh;
+        this.refreshTime = refreshTime;
     }
-
 }
 
-//usage
-let form = new FormAjax('.formajax');
-form.formSettings(new FormSettings(form, 'Form İşlemi2', true, true, 'Uyarı!', 'Bu işlemi gerçekleştirmek istediğinize emin misiniz?', refresh = true, refresh_time = 2000));
-// form.settings.set_title('Form İşlemi');
+// Usage
+const formajax = new FormAjax('.formajax');
+formajax.setFormSettings(new FormSettings({}));
+
+const formajax_refresh = new FormAjax('.formajax_refresh');
+formajax_refresh.setFormSettings(new FormSettings({ refresh: true }));
+
+const formajax_confirm = new FormAjax('.formajax_confirm');
+formajax_confirm.setFormSettings(new FormSettings({ confirm: true, confirmMsg: 'Bu işlemi gerçekleştirmek istediğinize emin misiniz?' }));
+
+const formajax_delete = new FormAjax('.formajax_delete');
+formajax_delete.setFormSettings(new FormSettings({ confirm: true, confirmMsg: 'Bu işlem geriye alınamaz onaylıyor musunuz?' }));
+
+const formajax_edit = new FormAjax('.formajax_edit');
+formajax_edit.setFormSettings(new FormSettings({ openPopup: true, title: 'Düzenleme Sonucu' }));
+
+const formajax_view = new FormAjax('.formajax_view');
+formajax_view.setFormSettings(new FormSettings({ openPopup: true, title: 'Görüntüleme Sonucu' }));
+
+const formajax_popup = new FormAjax('.formajax_popup');
+formajax_popup.setFormSettings(new FormSettings({ openPopup: true, title: 'Popup Sonucu' }));
+
+const formajax_refresh_popup = new FormAjax('.formajax_refresh_popup');
+formajax_refresh_popup.setFormSettings(new FormSettings({ openPopup: true, title: 'Popup Sonucu', refresh: true }));

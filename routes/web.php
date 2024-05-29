@@ -1,14 +1,14 @@
 <?php
 
+use App\Livewire\Counter;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\VerifyCsrfToken;
 use App\Http\Controllers\ImageController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\MainCategoryController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,7 +20,8 @@ use App\Http\Controllers\MainCategoryController;
 |
 */
 
-use App\Livewire\Counter;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\MainCategoryController;
 
 Route::get('/counter', Counter::class);
 Route::get('/counter2', [Counter::class, 'get_counter']);
@@ -43,6 +44,15 @@ Route::group([
             Route::prefix('get')->group(function () {
                 Route::get('{user_id}', [UserController::class, 'get_user_from_id']);
             });
+        });
+
+    Route::prefix('role')
+        ->group(function () {
+            Route::get('get', [RoleController::class, 'get_roles']);
+            Route::post('create', [RoleController::class, 'create_role']);
+            Route::post('update/{id}', [RoleController::class, 'update_role']);
+            Route::post('delete/{id}', [RoleController::class, 'delete_role']);
+            Route::post('user-role', [RoleController::class, 'update_user_role']);
         });
 
     Route::prefix('category')
@@ -110,4 +120,7 @@ Route::group([
 });
 
 
-Route::post('test', [TestController::class, 'test_methodu']);
+// Route::group([
+//     'prefix' => ''
+// ])
+// Route::post('test', [TestController::class, 'test_methodu']);

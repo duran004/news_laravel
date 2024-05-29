@@ -38,7 +38,7 @@
             </div>
             <div class="card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
-                <form action="/test" method="post" class="formajax">
+                <form action="/api/user/login" method="post" class="formajax_refresh_popup">
                     @csrf
                     <div class="input-group mb-3">
                         <input type="email" name="email" class="form-control" placeholder="Email">
@@ -59,7 +59,7 @@
                     <div class="row">
                         <div class="col-8">
                             <div class="icheck-primary">
-                                <input type="checkbox" name="checkbox1" id="remember">
+                                <input type="checkbox" name="rememberme" id="remember">
                                 <label for="remember">
                                     Remember Me
                                 </label>

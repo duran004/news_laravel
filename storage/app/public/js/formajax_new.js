@@ -210,4 +210,4 @@ const formajax_popup = new FormAjax('.formajax_popup');
 formajax_popup.setFormSettings(new FormSettings({ openPopup: true, title: 'Popup Sonucu' }));
 
 const formajax_refresh_popup = new FormAjax('.formajax_refresh_popup');
-formajax_refresh_popup.setFormSettings(new FormSettings({ openPopup: true, title: 'Popup Sonucu', refresh: true }));
+formajax_refresh_popup.setFormSettings(new FormSettings({ openPopup: true, title: 'Popup Sonucu', refresh: true, refreshTime: 2000 }));

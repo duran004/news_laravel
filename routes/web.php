@@ -23,8 +23,6 @@ use App\Http\Controllers\ImageController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MainCategoryController;
 
-Route::get('/counter', Counter::class);
-Route::get('/counter2', [Counter::class, 'get_counter']);
 
 Route::get('/', function () {
     return view('welcome');
@@ -97,30 +95,39 @@ Route::group([
         });
 });
 
+
+/**
+ * Admin
+ */
 Route::group([
     'prefix' => 'admin',
-    'middleware' => ['auth', 'role:Editor'],
+    'middleware' => ['auth', 'role:Super Admin|Admin|Editor'],
 ], function () {
     Route::get('/', function () {
         return view('admin.index');
     })->name('admin.index');
+
+
+
+
+    Route::post('logout', [UserController::class, 'logout'])->name('admin.logout');
 });
 
+
+/**
+ * Admin Login
+ */
 Route::group([
     'prefix' => 'admin',
+    'middleware' => ['loginCheck'],
 ], function () {
     Route::get('/login', function () {
         return view('admin.login');
     })->name('login');
+
 
     Route::get('/forgot-password', function () {
         return view('admin.forgot-password');
     })->name('admin.forgot-password');
     Route::post('/forgot-password-post', [UserController::class, 'forgot_password'])->name('admin.forgot-password-post');
 });
-
-
-// Route::group([
-//     'prefix' => ''
-// ])
-// Route::post('test', [TestController::class, 'test_methodu']);

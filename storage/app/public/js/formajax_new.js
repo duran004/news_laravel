@@ -5,6 +5,7 @@ class FormAjax {
         this.elementsSelector = 'input, select, textarea, checkbox, radio, button, submit, reset, hidden, password, text, url, email, tel, date, datetime-local, month, week, time, number, range, color';
         this.formElement = formElement;
         this.settings = new FormSettings();
+        this.popupSize = 'col-md-12';
 
         if (this.loadDependencies()) {
             this.init();
@@ -35,6 +36,8 @@ class FormAjax {
     }
 
     handleSubmit(form) {
+        this.popupSize = $(form).data('modal-size') || this.popupSize;
+        this.log(`popup_size: ${this.popupSize}`);
         if (this.settings.confirm) {
             $.confirm({
                 title: this.settings.confirmTitle,
@@ -108,7 +111,7 @@ class FormAjax {
     handleSuccess(response) {
         if (this.settings.openPopup) {
             $.alert({
-                columnClass: 'col-md-12 col-md-offset-3',
+                columnClass: this.popupSize + ' col-md-offset-3',
                 title: this.settings.title,
                 content: response.message,
                 buttons: {
@@ -140,7 +143,7 @@ class FormAjax {
 
         if (this.settings.openPopup) {
             $.alert({
-                columnClass: 'col-md-12 col-md-offset-3',
+                columnClass: this.popupSize + ' col-md-offset-3',
                 title: 'Error',
                 content: errorMessage,
                 buttons: {
@@ -198,7 +201,7 @@ const formajax_confirm = new FormAjax('.formajax_confirm');
 formajax_confirm.setFormSettings(new FormSettings({ confirm: true, confirmMsg: 'Bu işlemi gerçekleştirmek istediğinize emin misiniz?' }));
 
 const formajax_delete = new FormAjax('.formajax_delete');
-formajax_delete.setFormSettings(new FormSettings({ confirm: true, confirmMsg: 'Bu işlem geriye alınamaz onaylıyor musunuz?' }));
+formajax_delete.setFormSettings(new FormSettings({ confirm: true, confirmMsg: 'Bu işlem geriye alınamaz onaylıyor musunuz?', refresh: true, refreshTime: 2000, title: 'Silme Sonucu', openPopup: true }));
 
 const formajax_edit = new FormAjax('.formajax_edit');
 formajax_edit.setFormSettings(new FormSettings({ openPopup: true, title: 'Düzenleme Sonucu' }));

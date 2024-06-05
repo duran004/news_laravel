@@ -57,3 +57,10 @@
         </div>
     </div>
 @endsection
+
+
+
+<!-- Sparkline -->
+<script src="/storage/adminlte/plugins/sparklines/sparkline.js"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="/storage/adminlte/dist/js/pages/dashboard.js"></script>

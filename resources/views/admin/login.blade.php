@@ -29,7 +29,6 @@
 
 <body class="hold-transition login-page">
 
-
     <div class="login-box">
 
         <div class="card card-outline card-primary">
@@ -38,7 +37,7 @@
             </div>
             <div class="card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
-                <form action="/api/user/login" method="post" class="formajax_refresh_popup">
+                <form action="/api/user/login" method="post" class="formajax_refresh_popup" data-modal-size="col-md-6">
                     @csrf
                     <div class="input-group mb-3">
                         <input type="email" name="email" class="form-control" placeholder="Email">
@@ -82,7 +81,6 @@
         </div>
 
     </div>
-
 
 
     <script src="/storage/js/formajax_new.js"></script>

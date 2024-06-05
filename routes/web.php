@@ -35,8 +35,10 @@ Route::group([
 ], function () {
     Route::prefix('user')
         ->group(function () {
-            Route::post('create', [UserController::class, 'create_user']);
+            Route::post('create', [UserController::class, 'create_user'])->name('api.user.create');
             Route::get('get', [UserController::class, 'get_user']);
+            Route::get('get/all', [UserController::class, 'get_all_users'])->name('api.user.get.all');
+            Route::post('delete/{user_id}', [UserController::class, 'delete_user']);
             Route::post('login', [UserController::class, 'login']);
             Route::get('logout', [UserController::class, 'logout']);
             Route::prefix('get')->group(function () {
@@ -106,7 +108,9 @@ Route::group([
     Route::get('/', function () {
         return view('admin.index');
     })->name('admin.index');
-
+    //USERS
+    Route::get('/users', [UserController::class, 'view_all_users'])->name('admin.users');
+    Route::get('/users/add', [UserController::class, 'add_user'])->name('admin.users.add');
 
 
 

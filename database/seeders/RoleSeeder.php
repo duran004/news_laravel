@@ -7,7 +7,7 @@ use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class RolePermissionSeeder extends Seeder
+class RoleSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -23,7 +23,5 @@ class RolePermissionSeeder extends Seeder
         foreach ($roles as $role) {
             Role::create(['name' => $role]);
         }
-        $user = User::find(1);
-        $user->assignRole('Super Admin');
     }
 }

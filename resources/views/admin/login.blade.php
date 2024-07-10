@@ -83,7 +83,7 @@
     </div>
 
 
-    <script src="/storage/js/formajax_new.js"></script>
+    <script src="{{ asset('vendor/formajax/formajax.js') }}"></script>
 
 
     {{-- <script src="/storage/adminlte/plugins/jquery/jquery.min.js"></script> --}}

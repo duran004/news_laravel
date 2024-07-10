@@ -6,24 +6,61 @@ class FormAjax {
         this.formElement = formElement;
         this.settings = new FormSettings();
         this.popupSize = 'col-md-12';
-
-        if (this.loadDependencies()) {
-            this.init();
-        }
+        this.laravelPath = '/vendor/formajax/';
+        this.loadDependencies().then(() => this.init());
     }
-
-    loadDependencies() {
+    async loadDependencies() {
         const missingDependencies = this.dependencies.filter(dep => {
-            if (dep === 'jquery' && typeof jQuery === 'undefined') return true;
-            if (dep === 'jquery-confirm' && typeof $.confirm === 'undefined') return true;
+            if (dep === 'jquery' && typeof jQuery === 'undefined') {
+                return true;
+            }
+            if (dep === 'jquery-confirm' && (typeof $ === 'undefined' || typeof $.confirm === 'undefined')) {
+                return true;
+            }
             return false;
         });
 
         if (missingDependencies.length > 0) {
-            missingDependencies.forEach(dep => this.log(`${dep} not found`, 'error'));
-            return false;
+            for (const dep of missingDependencies) {
+                this.log(`${dep} not found`, 'error');
+                if (dep === 'jquery') {
+                    await this.loadScript(`${this.laravelPath}jquery.js`);
+                }
+                if (dep === 'jquery-confirm') {
+                    await this.loadScript(`${this.laravelPath}jquery-confirm.js`);
+                    await this.loadScript(`${this.laravelPath}jquery-confirm.css`);
+                }
+            }
+            return this.loadDependencies();
         }
+
         return true;
+    }
+
+    loadScript(file) {
+        return new Promise((resolve, reject) => {
+            this.log(`Loading ${file}`);
+            const is_js_or_css = file.split('.').pop();
+            let element;
+            if (is_js_or_css === 'css') {
+                element = document.createElement('link');
+                element.rel = 'stylesheet';
+                element.type = 'text/css';
+                element.href = file;
+            } else {
+                element = document.createElement('script');
+                element.src = file;
+            }
+            element.onload = () => {
+                this.log(`${file} loaded successfully`);
+                resolve();
+            };
+            element.onerror = (e) => {
+                this.log(e, 'error');
+                reject(e);
+            };
+            document.getElementsByTagName('head')[0].appendChild(element);
+        });
     }
 
     init() {
@@ -84,87 +121,6 @@ class FormAjax {
             return url;
         }, '').slice(0, -1); // Remove the last '&' character
     }
-
-    // submit(form) {
-    //     const formData = new FormData(form);
-    //     const formUrl = $(form).attr('action');
-    //     const formMethod = $(form).attr('method').toLowerCase();
-    //     const data = formMethod === 'get' ? this.createUrl(form) : formData;
-    //     const allElements = $(form).find(this.elementsSelector);
-    //     allElements.each((_, element) => {
-    //         const $element = $(element);
-    //         if ($element.is(':checkbox')) {
-    //             formData.set($element.attr('name'), $element.prop('checked') ? 'true' : 'false');
-    //         }
-    //     });
-    //     this.log(`form_data: ${data}`, 'warning');
-    //     $.ajax({
-    //         url: formUrl,
-    //         method: formMethod,
-    //         data: data,
-    //         processData: formMethod !== 'post',
-    //         contentType: formMethod === 'post' ? false : 'application/x-www-form-urlencoded; charset=UTF-8',
-    //         success: (response, status, xhr) => {
-    //             console.log(response);
-    //             if (xhr.status === 200) {
-    //                 if (response.status) {
-    //                     this.log("qweqwes", 'success');
-    //                     this.handleSuccess(response);
-    //                 } else {
-    //                     this.handleError(response, 200);
-    //                 }
-    //             } else {
-    //                 this.handleError(xhr);
-    //             }
-    //         },
-    //         error: (xhr) => this.handleError(xhr),
-    //     });
-    // }
-
-    // submit(form) {
-    //     const formData = new FormData(form);
-    //     const formUrl = $(form).attr('action');
-    //     const formMethod = $(form).attr('method').toLowerCase();
-    //     const data = formMethod === 'get' ? this.createUrl(form) : formData;
-    //     const allElements = $(form).find(this.elementsSelector);
-    //     const checkboxNames = new Set();
-
-    //     allElements.each((_, element) => {
-    //         const $element = $(element);
-    //         if ($element.is(':checkbox')) {
-    //             const name = $element.attr('name');
-    //             checkboxNames.add(name);
-    //             formData.set(name, $element.prop('checked') ? 'true' : 'false');
-    //         }
-    //     });
-
-    //     checkboxNames.forEach(name => {
-    //         const values = $(form).find(`input[name="${name}"]:checked`).map((_, el) => $(el).val()).get();
-    //         formData.set(name, values);
-    //     });
-
-    //     this.log(`form_data: ${data}`, 'warning');
-    //     $.ajax({
-    //         url: formUrl,
-    //         method: formMethod,
-    //         data: data,
-    //         processData: formMethod !== 'post',
-    //         contentType: formMethod === 'post' ? false : 'application/x-www-form-urlencoded; charset=UTF-8',
-    //         success: (response, status, xhr) => {
-    //             console.log(response);
-    //             if (xhr.status === 200) {
-    //                 if (response.status) {
-    //                     this.handleSuccess(response);
-    //                 } else {
-    //                     this.handleError(response, 200);
-    //                 }
-    //             } else {
-    //                 this.handleError(xhr);
-    //             }
-    //         },
-    //         error: (xhr) => this.handleError(xhr),
-    //     });
-    // }
     submit(form) {
         const formData = new FormData();
         const formUrl = $(form).attr('action');

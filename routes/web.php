@@ -22,7 +22,7 @@ use App\Http\Controllers\ImageController;
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MainCategoryController;
-
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -103,15 +103,15 @@ Route::group([
  */
 Route::group([
     'prefix' => 'admin',
+
     'middleware' => ['auth', 'role:Super Admin|Admin|Editor'],
 ], function () {
     Route::get('/', function () {
         return view('admin.index');
     })->name('admin.index');
     //USERS
-    Route::get('/users', [UserController::class, 'view_all_users'])->name('admin.users');
-    Route::get('/users/add', [UserController::class, 'add_user'])->name('admin.users.add');
 
+    Route::resource('users', AdminUserController::class)->middleware('permission:User-index|User-create|User-show|User-edit|User-update|User-destroy');
 
 
     Route::post('logout', [UserController::class, 'logout'])->name('admin.logout');

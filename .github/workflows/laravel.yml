@@ -21,6 +21,8 @@ jobs:
    
     - name: Install Dependencies
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+    - name: Generate autoload files
+      run: composer dump-autoload
     - name: Clear Configuration Cache
       run: php artisan config:cache
     - name: Clear Application Cache

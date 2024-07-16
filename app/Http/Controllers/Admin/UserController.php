@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Http;
+use GuzzleHttp\Client;
 
 class UserController extends Controller
 {
@@ -47,11 +49,7 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        $user = User::find($id);
-        return response()->json([
-            'status' => true,
-            'message' => view('admin.users.show', compact('user'))->render()
-        ]);
+        return Http::get(route('api.user.get', ['id' => $id]));
     }
 
     /**

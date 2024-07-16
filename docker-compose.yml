@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+  php:
+    build:
+      context: .
+      dockerfile: .docker/php/Dockerfile
+    volumes:
+      - ./:/var/www/html:rw # Grant read-write access
+    ports:
+      - "8000:80"
+
+  nginx:
+    build:
+      context: .
+      dockerfile: .docker/nginx/Dockerfile
+    volumes:
+      - ./:/var/www/html:ro # Grant read-only access (recommended)
+    ports:
+      - "8080:80"
+    depends_on:
+      - php

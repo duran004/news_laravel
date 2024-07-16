@@ -179,22 +179,23 @@
         },
         {
             "name": "dcyilmaz/livewiredatatable",
-            "version": "v1.1.2",
+            "version": "v1.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/duran004/livewiredatatable.git",
-                "reference": "27aba0b9529648d1319206fedb7f86fb8f87014d"
+                "reference": "c0aa624391536879e66583008267d60e45e693d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/duran004/livewiredatatable/zipball/27aba0b9529648d1319206fedb7f86fb8f87014d",
-                "reference": "27aba0b9529648d1319206fedb7f86fb8f87014d",
+                "url": "https://api.github.com/repos/duran004/livewiredatatable/zipball/c0aa624391536879e66583008267d60e45e693d1",
+                "reference": "c0aa624391536879e66583008267d60e45e693d1",
                 "shasum": ""
             },
             "require": {
                 "laravel/framework": "^10.0|^11.0",
                 "livewire/livewire": "^3.0",
-                "php": "^7.3|^8.0"
+                "php": "^7.3|^8.0",
+                "spatie/laravel-permission": "^6.0"
             },
             "type": "library",
             "extra": {
@@ -222,9 +223,9 @@
             "description": "Livewire Datatable Component",
             "support": {
                 "issues": "https://github.com/duran004/livewiredatatable/issues",
-                "source": "https://github.com/duran004/livewiredatatable/tree/v1.1.2"
+                "source": "https://github.com/duran004/livewiredatatable/tree/v1.1.5"
             },
-            "time": "2024-06-05T04:24:14+00:00"
+            "time": "2024-07-16T01:44:52+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
@@ -2042,16 +2043,16 @@
         },
         {
             "name": "livewire/livewire",
-            "version": "v3.5.2",
+            "version": "v3.5.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/livewire/livewire.git",
-                "reference": "636725c1f87bc7844dd80277488268db27eec1aa"
+                "reference": "b158c6386a892efc6c5e4682e682829baac1f933"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/livewire/livewire/zipball/636725c1f87bc7844dd80277488268db27eec1aa",
-                "reference": "636725c1f87bc7844dd80277488268db27eec1aa",
+                "url": "https://api.github.com/repos/livewire/livewire/zipball/b158c6386a892efc6c5e4682e682829baac1f933",
+                "reference": "b158c6386a892efc6c5e4682e682829baac1f933",
                 "shasum": ""
             },
             "require": {
@@ -2106,7 +2107,7 @@
             "description": "A front-end framework for Laravel.",
             "support": {
                 "issues": "https://github.com/livewire/livewire/issues",
-                "source": "https://github.com/livewire/livewire/tree/v3.5.2"
+                "source": "https://github.com/livewire/livewire/tree/v3.5.4"
             },
             "funding": [
                 {
@@ -2114,7 +2115,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-07-03T17:22:45+00:00"
+            "time": "2024-07-15T18:27:32+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -6388,16 +6389,16 @@
         },
         {
             "name": "barryvdh/laravel-ide-helper",
-            "version": "v3.0.0",
+            "version": "v3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-ide-helper.git",
-                "reference": "bc1d67f01ce8c77e3f97d48ba51fa1d81874f622"
+                "reference": "591e7d665fbab8a3b682e451641706341573eb80"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-ide-helper/zipball/bc1d67f01ce8c77e3f97d48ba51fa1d81874f622",
-                "reference": "bc1d67f01ce8c77e3f97d48ba51fa1d81874f622",
+                "url": "https://api.github.com/repos/barryvdh/laravel-ide-helper/zipball/591e7d665fbab8a3b682e451641706341573eb80",
+                "reference": "591e7d665fbab8a3b682e451641706341573eb80",
                 "shasum": ""
             },
             "require": {
@@ -6429,7 +6430,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.0-dev"
+                    "dev-master": "3.1-dev"
                 },
                 "laravel": {
                     "providers": [
@@ -6466,7 +6467,7 @@
             ],
             "support": {
                 "issues": "https://github.com/barryvdh/laravel-ide-helper/issues",
-                "source": "https://github.com/barryvdh/laravel-ide-helper/tree/v3.0.0"
+                "source": "https://github.com/barryvdh/laravel-ide-helper/tree/v3.1.0"
             },
             "funding": [
                 {
@@ -6478,7 +6479,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-03-01T12:53:18+00:00"
+            "time": "2024-07-12T14:20:51+00:00"
         },
         {
             "name": "barryvdh/reflection-docblock",

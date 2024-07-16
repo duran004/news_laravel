@@ -57,7 +57,9 @@
                         @elseif ($label == 'actions')
                             <td>
                                 <div class="btn-group w-100">
-
+                                    @php
+                                        $model_name = Str::lower($model_name);
+                                    @endphp
                                     @can("$model_name-show")
                                         <form action="{{ $api_route }}/{{ $item->id }}/" method="get"
                                             class="formajax_view w-100">
@@ -75,7 +77,7 @@
                                         </form>
                                     @endcan
                                     {{--  if model permissions --}}
-                                    @can("$model_name-destroy", $item)
+                                    @can("$model_name-delete", $item)
                                         <form action="{{ $api_route }}/{{ $item->id }}" method="post"
                                             class="formajax_delete w-100">
                                             @csrf

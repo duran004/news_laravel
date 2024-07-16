@@ -113,12 +113,13 @@ class UserController extends Controller
 
     public function get_user_from_id(int $user_id)
     {
+        dd($user_id);
         $user = User::find($user_id);
         if (!$user) {
             return response()->json([
                 'status' => false,
                 'message' => 'Kullanıcı bulunamadı.'
-            ]);
+            ], 404);
         }
         return response()->json([
             'status' => true,

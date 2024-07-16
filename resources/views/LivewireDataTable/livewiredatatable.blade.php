@@ -57,9 +57,7 @@
                         @elseif ($label == 'actions')
                             <td>
                                 <div class="btn-group w-100">
-                                    @php
-                                        $model_name = Str::lower($model_name);
-                                    @endphp
+
                                     @can("$model_name-show")
                                         <form action="{{ $api_route }}/{{ $item->id }}/" method="get"
                                             class="formajax_view w-100">

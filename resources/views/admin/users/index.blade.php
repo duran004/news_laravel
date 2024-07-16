@@ -4,7 +4,7 @@
 @section('content')
     <div class="border-1 bg-white p-3 mt-3 shadow-sm">
         <h2>{{ __('Admin.users') }}</h2>
-        @livewire('livewire-data-table', ['model' => \App\Models\User::class, 'api_route' => '/admin/users'])
+        @livewire('LivewireDataTable', ['model' => \App\Models\User::class, 'api_route' => '/admin/users'])
         @livewireScripts
     </div>
 @endsection

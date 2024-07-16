@@ -28,7 +28,7 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 Route::get('test', [TestController::class, 'test_methodu']);
-Route::get('api/users/{id}', [UserController::class, 'get_user_from_id'])->name('api.user.show');
+Route::get('api/users/{id}', [UserController::class, 'get_user_from_id'])->name('api.user.get');
 Route::resource('admin/users', AdminUserController::class);
 Route::group([
     'prefix' => 'api',

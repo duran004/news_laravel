@@ -10,7 +10,7 @@
     "require": {
         "php": "^8.2",
         "dcyilmaz/formajax": "^1.0",
-        "dcyilmaz/livewiredatatable": "^1.1",
+        "dcyilmaz/livewiredatatable": "^1.2.1",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^11.0",
         "laravel/sanctum": "^4.0",
